@@ -12,8 +12,17 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+
+  socket.on('init', (msg) => {
+    console.log(msg);
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
+  });
+
+  socket.on('message', (msg) => {
+    io.emit('message', `Socket ${socket.id.substr(0, 2)} said ${msg}`);
   });
 });
 
